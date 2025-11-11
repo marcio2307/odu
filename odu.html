@@ -89,7 +89,6 @@
   .buzio {
     position: absolute;
     width: 20%;
-    height: auto;
     aspect-ratio: 1.6/1;
     background-size: cover;
     animation: cair 1.5s ease forwards;
@@ -192,9 +191,14 @@ function calcularOdu() {
     const buzio = document.createElement("div");
     buzio.classList.add("buzio");
 
-    // Centralização realista
-    const left = 90 + Math.random() * 100;
-    const top = 90 + Math.random() * 100;
+    // 🎯 Distribuição natural: circular e centralizada
+    const centerX = 130;
+    const centerY = 130;
+    const raio = 40 + Math.random() * 40; // espalhamento no centro
+    const angulo = Math.random() * 2 * Math.PI;
+
+    const left = centerX + Math.cos(angulo) * raio;
+    const top = centerY + Math.sin(angulo) * raio;
 
     buzio.style.left = `${left}px`;
     buzio.style.top = `${top}px`;
