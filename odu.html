@@ -38,13 +38,14 @@
     box-shadow: 0 0 15px #ffd700;
   }
 
-  input[type="date"] {
+  input[type="text"] {
     padding: 10px;
     border-radius: 10px;
     border: none;
     font-size: 16px;
     width: 80%;
     max-width: 300px;
+    text-align: center;
   }
 
   button {
@@ -87,7 +88,7 @@
 
   .buzio {
     position: absolute;
-    width: 20%; /* Aumentado para destacar */
+    width: 20%;
     height: auto;
     aspect-ratio: 1.6/1;
     background-size: cover;
@@ -123,8 +124,8 @@
 <h1>🔮 Descubra seu Odu de Nascimento 🔮</h1>
 
 <div class="container">
-  <p>Digite sua data de nascimento e descubra qual Odu rege seu destino:</p>
-  <input type="date" id="dataNascimento">
+  <p>Digite sua data de nascimento (ex: 14/11/1990):</p>
+  <input type="text" id="dataNascimento" placeholder="DD/MM/AAAA" maxlength="10">
   <br>
   <button onclick="calcularOdu()">Revelar Odu</button>
 
@@ -163,10 +164,14 @@ function reduzirNumero(num) {
 }
 
 function calcularOdu() {
-  const data = document.getElementById("dataNascimento").value;
-  if (!data) { alert("Por favor, insira sua data de nascimento."); return; }
+  const data = document.getElementById("dataNascimento").value.trim();
+  if (!data.match(/^\d{2}\/\d{2}\/\d{4}$/)) {
+    alert("Por favor, insira a data no formato DD/MM/AAAA.");
+    return;
+  }
 
-  const soma = data.split('-').join('').split('').reduce((a, b) => a + parseInt(b), 0);
+  const numeros = data.replace(/\D/g, '').split('');
+  const soma = numeros.reduce((a, b) => a + parseInt(b), 0);
   const oduNum = reduzirNumero(soma);
   const odu = odus.find(o => o.num === oduNum);
 
@@ -187,9 +192,9 @@ function calcularOdu() {
     const buzio = document.createElement("div");
     buzio.classList.add("buzio");
 
-    // Búzios concentrados no centro
-    const left = 100 + Math.random() * 80; 
-    const top = 100 + Math.random() * 80;
+    // Centralização realista
+    const left = 90 + Math.random() * 100;
+    const top = 90 + Math.random() * 100;
 
     buzio.style.left = `${left}px`;
     buzio.style.top = `${top}px`;
