@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Descubra seu Odu - Cartomantes Online</title>
+<style>
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-image: url('https://umbandaead.blog.br/wp-content/uploads/files/jogo-buzios-1.jpg');
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    backdrop-filter: brightness(0.6);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  h1 {
+    margin-top: 25px;
+    color: #ffd700;
+    text-shadow: 2px 2px 6px #000;
+    font-size: clamp(22px, 5vw, 32px);
+  }
+
+  .container {
+    background: rgba(0, 0, 0, 0.75);
+    border-radius: 20px;
+    padding: 25px;
+    margin-top: 20px;
+    width: 90%;
+    max-width: 750px;
+    box-shadow: 0 0 15px #ffd700;
+  }
+
+  input[type="date"] {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    font-size: 16px;
+    width: 80%;
+    max-width: 300px;
+  }
+
+  button {
+    margin-top: 15px;
+    padding: 12px 25px;
+    font-size: 18px;
+    background: #ffd700;
+    color: #000;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 80%;
+    max-width: 250px;
+  }
+
+  button:hover {
+    background: #ff9900;
+  }
+
+  .odu-info {
+    margin-top: 20px;
+    text-align: left;
+    line-height: 1.7;
+    font-size: 15px;
+    padding: 10px;
+  }
+
+  .animation {
+    position: relative;
+    margin: 25px auto;
+    width: clamp(220px, 70vw, 300px);
+    height: clamp(220px, 70vw, 300px);
+    background: url('https://i.ibb.co/ycK55TH5/D-879072-MLB94468249023-102025-O-removebg-preview.png') center/contain no-repeat;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #ffd700;
+    box-shadow: 0 0 25px #000;
+  }
+
+  .buzio {
+    position: absolute;
+    width: 20%; /* Aumentado para destacar */
+    height: auto;
+    aspect-ratio: 1.6/1;
+    background-size: cover;
+    animation: cair 1.5s ease forwards;
+    opacity: 0;
+  }
+
+  @keyframes cair {
+    0% { transform: translateY(-200px) rotate(0deg); opacity: 0; }
+    100% { transform: translateY(0) rotate(360deg); opacity: 1; }
+  }
+
+  .odu-nome {
+    font-size: clamp(20px, 5vw, 26px);
+    color: #ffdd55;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 15px;
+    text-shadow: 1px 1px 5px #000;
+  }
+
+  footer {
+    margin-top: 40px;
+    color: #ccc;
+    font-size: 14px;
+    text-align: center;
+    padding-bottom: 15px;
+  }
+</style>
+</head>
+<body>
+
+<h1>🔮 Descubra seu Odu de Nascimento 🔮</h1>
+
+<div class="container">
+  <p>Digite sua data de nascimento e descubra qual Odu rege seu destino:</p>
+  <input type="date" id="dataNascimento">
+  <br>
+  <button onclick="calcularOdu()">Revelar Odu</button>
+
+  <div class="animation" id="animacao"></div>
+  <div class="odu-nome" id="oduNome"></div>
+  <div class="odu-info" id="oduInfo"></div>
+</div>
+
+<footer>Cartomantes Online © 2025</footer>
+
+<script>
+const odus = [
+  { num: 1, nome: "Okànràn Méjì", regentes: "Exu, Ogum, Obatalá", descricao: "Líder nato, ousado e corajoso. Representa o início e o impulso vital. Ensina que o poder só é verdadeiro quando guiado pela sabedoria." },
+  { num: 2, nome: "Ejìokò Méjì", regentes: "Oxóssi, Oxalá, Nanã", descricao: "Paciência, sabedoria e equilíbrio. Representa estabilidade e harmonia. Ensina que o tempo certo é mais poderoso do que a força bruta." },
+  { num: 3, nome: "Ètá Ògúndá Méjì", regentes: "Ogum, Iansã", descricao: "Odu da luta e da conquista. Representa o trabalho, a disciplina e a vitória merecida. Ensina que a vitória pertence a quem persiste com fé." },
+  { num: 4, nome: "Ìròsùn Méjì", regentes: "Iansã, Obá, Egungun, Oxóssi", descricao: "Odu dos mistérios, da intuição e dos ancestrais. Representa sabedoria espiritual, conexão com a natureza e dons mediúnicos." },
+  { num: 5, nome: "Òsé Méjì", regentes: "Oxum, Logunedé, Obatalá", descricao: "Odu do amor, da beleza e da prosperidade. Ensina que a doçura e a bondade abrem portas e curam feridas." },
+  { num: 6, nome: "Òbàrà Méjì", regentes: "Oxóssi, Xangô, Logunedé, Iansã e Oxum", descricao: "Odu da comunicação, da justiça e do poder da palavra. Representa criatividade, expressão e liderança." },
+  { num: 7, nome: "Òdí Méjì", regentes: "Iemanjá, Nanã, Obaluaiê", descricao: "Proteção, recolhimento e introspecção. Representa o útero e o poder de gerar novos começos." },
+  { num: 8, nome: "Èjìonílé Méjì", regentes: "Obaluaiê, Oxóssi, Oxalá", descricao: "Odu da estrutura e da prosperidade. Ensina a força das raízes e da fé." },
+  { num: 9, nome: "Òsá Méjì", regentes: "Iemanjá, Obá, Nanã", descricao: "Transformação, espiritualidade e renascimento. Ensina a força de recomeçar." },
+  { num: 10, nome: "Òfún Méjì", regentes: "Oxalá, Orunmilá, Oxum", descricao: "Odu da pureza e sabedoria. Representa iluminação e verdade espiritual." },
+  { num: 11, nome: "Òwónrín Méjì", regentes: "Iansã, Exu", descricao: "Movimento, liberdade e mudança. Representa renovação constante e transformação." },
+  { num: 12, nome: "Èjìlaxeborá Méjì", regentes: "Xangô, Oxalá, Obaluaiê", descricao: "Justiça, ética e aprendizado. Ensina o equilíbrio entre ação e reflexão." },
+  { num: 13, nome: "Èjìlògbón Méjì", regentes: "Nanã, Obaluaiê", descricao: "Sabedoria, prudência e maturidade espiritual. Representa o respeito ao tempo." },
+  { num: 14, nome: "Ìká Méjì", regentes: "Obaluaiê, Iansã, Oxumarê", descricao: "Cura, transformação e superação da dor. Ensina que toda ferida é uma iniciação." },
+  { num: 15, nome: "Òbè Ògúndá Méjì", regentes: "Ogum, Xangô, Oxóssi", descricao: "Luta justa, ética e persistência. Ensina que o triunfo é fruto da verdade." },
+  { num: 16, nome: "Aláfíà Méjì", regentes: "Oxalá, Ifá, Oxum", descricao: "Odu da paz e plenitude. Representa harmonia, equilíbrio e iluminação." },
+];
+
+function reduzirNumero(num) {
+  while (num > 16) {
+    num = num.toString().split('').reduce((a, b) => a + parseInt(b), 0);
+  }
+  return num;
+}
+
+function calcularOdu() {
+  const data = document.getElementById("dataNascimento").value;
+  if (!data) { alert("Por favor, insira sua data de nascimento."); return; }
+
+  const soma = data.split('-').join('').split('').reduce((a, b) => a + parseInt(b), 0);
+  const oduNum = reduzirNumero(soma);
+  const odu = odus.find(o => o.num === oduNum);
+
+  document.getElementById("oduNome").innerHTML = `Seu Odu é: ${odu.num} – ${odu.nome}`;
+  document.getElementById("oduInfo").innerHTML = `
+    <strong>Orixás Regentes:</strong> ${odu.regentes}<br><br>
+    <strong>Descrição:</strong> ${odu.descricao}
+  `;
+
+  const animacao = document.getElementById("animacao");
+  animacao.innerHTML = "";
+
+  const totalBuzios = 16;
+  const abertos = oduNum;
+  const fechados = totalBuzios - abertos;
+
+  for (let i = 0; i < totalBuzios; i++) {
+    const buzio = document.createElement("div");
+    buzio.classList.add("buzio");
+
+    // Búzios concentrados no centro
+    const left = 100 + Math.random() * 80; 
+    const top = 100 + Math.random() * 80;
+
+    buzio.style.left = `${left}px`;
+    buzio.style.top = `${top}px`;
+    buzio.style.transform = `rotate(${Math.random() * 360}deg)`;
+    buzio.style.animationDelay = `${Math.random()}s`;
+    buzio.style.backgroundImage =
+      i < abertos
+        ? "url('https://i.ibb.co/G4n1TnTc/images-1-removebg-preview.png')" 
+        : "url('https://i.ibb.co/2Y1Rs6XB/images-removebg-preview.png')";
+    animacao.appendChild(buzio);
+  }
+}
+</script>
+
+</body>
+</html>
