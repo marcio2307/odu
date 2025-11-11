@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Descubra seu Odu - Cartomantes Online</title>
+<title>Descubra seu Odu - Pai Márcio de Oxóssi</title>
 <style>
   body {
     font-family: 'Poppins', sans-serif;
@@ -26,6 +26,18 @@
     color: #ffd700;
     text-shadow: 2px 2px 6px #000;
     font-size: clamp(22px, 5vw, 32px);
+  }
+
+  .descricao {
+    background: rgba(0, 0, 0, 0.7);
+    width: 90%;
+    max-width: 800px;
+    margin-top: 15px;
+    padding: 15px;
+    border-radius: 15px;
+    text-align: justify;
+    line-height: 1.7;
+    font-size: 15px;
   }
 
   .container {
@@ -77,8 +89,8 @@
   .animation {
     position: relative;
     margin: 25px auto;
-    width: clamp(220px, 70vw, 300px);
-    height: clamp(220px, 70vw, 300px);
+    width: clamp(240px, 70vw, 330px);
+    height: clamp(240px, 70vw, 330px);
     background: url('https://i.ibb.co/ycK55TH5/D-879072-MLB94468249023-102025-O-removebg-preview.png') center/contain no-repeat;
     border-radius: 50%;
     overflow: hidden;
@@ -93,6 +105,7 @@
     background-size: cover;
     animation: cair 1.5s ease forwards;
     opacity: 0;
+    filter: drop-shadow(2px 4px 3px rgba(0,0,0,0.7));
   }
 
   @keyframes cair {
@@ -120,7 +133,15 @@
 </head>
 <body>
 
-<h1>🔮 Descubra seu Odu de Nascimento 🔮</h1>
+<h1>Descubra seu Odu de Nascimento</h1>
+
+<div class="descricao">
+  <p><strong>O que é um Odu?</strong><br>
+  O Odu é o caminho espiritual que rege o destino e a energia vital de cada pessoa segundo a tradição yorubá. 
+  Cada Odu representa forças da natureza, lições de vida e a influência dos Orixás sobre nossa personalidade e jornada. 
+  Existem 16 Odus principais, e cada um revela aspectos do caráter, desafios e propósito da alma. 
+  Saber seu Odu é conhecer o mapa espiritual da sua existência, guiando suas escolhas com sabedoria ancestral.</p>
+</div>
 
 <div class="container">
   <p>Digite sua data de nascimento (ex: 14/11/1990):</p>
@@ -133,7 +154,7 @@
   <div class="odu-info" id="oduInfo"></div>
 </div>
 
-<footer>Cartomantes Online © 2025</footer>
+<footer>Pai Márcio de Oxóssi © 2025</footer>
 
 <script>
 const odus = [
@@ -191,10 +212,9 @@ function calcularOdu() {
     const buzio = document.createElement("div");
     buzio.classList.add("buzio");
 
-    // 🎯 Distribuição natural: circular e centralizada
-    const centerX = 130;
-    const centerY = 130;
-    const raio = 40 + Math.random() * 40; // espalhamento no centro
+    const centerX = 125;
+    const centerY = 125;
+    const raio = 20 + Math.random() * 40; // dentro do centro
     const angulo = Math.random() * 2 * Math.PI;
 
     const left = centerX + Math.cos(angulo) * raio;
